@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes">
+  <title>竞彩足球 · 用数据看比赛</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f4f9fc;
+      color: #1f2b38;
+      line-height: 1.7;
+      padding: 0 16px 40px;
+    }
+
+    .wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* hero 横幅 — 仿杂志跨页封面 */
+    .hero {
+      margin: 20px -16px 28px;
+      padding: 48px 20px 40px;
+      background: linear-gradient(145deg, #0b3b4b 0%, #1c6d7a 100%);
+      border-radius: 0 0 32px 32px;
+      box-shadow: 0 8px 20px rgba(0, 40, 50, 0.18);
+      color: white;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .hero .sub {
+      font-size: 1.1rem;
+      opacity: 0.85;
+      font-weight: 350;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      display: inline-block;
+      padding-top: 8px;
+      margin-top: 6px;
+    }
+
+    .hero .tagline {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.13);
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+    }
+
+    /* 背景简述卡片 */
+    .bg-card {
+      background: white;
+      border-radius: 28px;
+      padding: 26px 22px;
+      margin: 20px 0 24px;
+      box-shadow: 0 4px 12px rgba(0, 30, 40, 0.04);
+      border-left: 6px solid #2596a7;
+    }
+
+    .bg-card h2 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #115b68;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bg-card p {
+      margin-bottom: 10px;
+    }
+
+    /* 网格卡片 — 杂志专题式 */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 28px 0 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 22px 16px 18px;
+      box-shadow: 0 4px 10px rgba(0, 30, 42, 0.04);
+      transition: box-shadow 0.2s;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #15616d;
+      border-bottom: 2px dotted #8fcbd3;
+      padding-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+    }
+
+    .card .icon-em {
+      display: inline-block;
+      background: #d6edf0;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      color: #0c5663;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    /* 第三段自然叙述 — 带引用感 */
+    .essay-block {
+      background: #e9f4f6;
+      padding: 24px 22px;
+      border-radius: 28px;
+      margin: 20px 0 26px;
+      position: relative;
+    }
+
+    .essay-block::before {
+      content: "“";
+      font-size: 3.6rem;
+      color: #2596a7;
+      opacity: 0.3;
+      position: absolute;
+      top: -2px;
+      left: 8px;
+      line-height: 1;
+    }
+
+    .essay-block p {
+      margin-bottom: 8px;
+      text-indent: 2em;
+    }
+
+    .essay-block .source {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      text-align: right;
+      color: #2d7885;
+      font-style: italic;
+    }
+
+    /* FAQ 摘要 — 问与答小卡片 */
+    .faq-mini {
+      background: white;
+      border-radius: 28px;
+      padding: 20px 22px 16px;
+      margin: 20px 0 22px;
+      box-shadow: 0 2px 8px rgba(0, 30, 40, 0.03);
+    }
+
+    .faq-mini h3 {
+      font-size: 1.1rem;
+      color: #115b68;
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .faq-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .faq-item .q {
+      font-weight: 500;
+      color: #0a4855;
+      min-width: 72px;
+    }
+
+    .faq-item .a {
+      color: #2f4050;
+      font-size: 0.95rem;
+    }
+
+    /* 页尾访问提示 */
+    .footer-note {
+      margin-top: 32px;
+      padding: 20px 16px 12px;
+      text-align: center;
+      border-top: 1px solid #bddae0;
+      color: #2f6070;
+      font-size: 0.95rem;
+    }
+
+    .footer-note a {
+      color: #0f5f6d;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 2px solid #6eb7c4;
+      padding-bottom: 2px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .footer-note a:hover {
+      border-bottom-color: #0e4b56;
+      background: #d4edf0;
+    }
+
+    .footer-note .small-meta {
+      display: block;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      opacity: 0.55;
+    }
+
+    /* 响应式 */
+    @media (max-width: 580px) {
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+
+      .grid-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .hero {
+        padding: 36px 16px 32px;
+      }
+
+      .bg-card,
+      .essay-block,
+      .faq-mini {
+        padding: 20px 16px;
+      }
+
+      .faq-item {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .faq-item .q {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- 杂志横幅 hero -->
+    <div class="hero">
+      <h1>竞彩足球</h1>
+      <div class="sub">数据 · 观点 · 节奏</div>
+      <div class="tagline">找到适合你自己的信息场</div>
+    </div>
+
+    <!-- 背景说明：网站用途快速识别 -->
+    <div class="bg-card">
+      <h2><span>◈</span> 它是做什么的？</h2>
+      <p>打开 <strong>cn‑jcjq.com</strong> ，你不会看到花哨的入口或催促注册的弹窗。这个站点把「竞彩足球」拆解成可读的维度：联赛实时数据、对阵走势、隐藏的冷门信号。它更像一个信息聚合笔记，而非典型的资讯门户。</p>
+      <p>对第一次到访的人来说，首页清爽的卡片布局会直接告诉你：这里不讲故事，只陈列经过挑选的比赛事实。如果你想快速了解某支球队近六场的得失球分布，或者想对比两队的半场节奏，这里一般能找到线索。</p>
+    </div>
+
+    <!-- 三段自然介绍：网格卡片 + 一段叙述 -->
+    <div class="grid-cards">
+      <div class="card">
+        <h3><span class="icon-em">1</span> 联赛一览</h3>
+        <p>涵盖英超、西甲、意甲、德甲、法甲及主流杯赛。每轮数据更新稳定，以表格和简易折线呈现主客差异。</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon-em">2</span> 焦点数字</h3>
+        <p>不堆砌所有统计，只挑近期异常值——比如某队连续五场角球占优却输盘，或核心射手缺阵后预期进球的变化。</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon-em">3</span> 节奏笔记</h3>
+        <p>用短评形式记录比赛前后的关键印象：换人效果、天气影响、临场变阵。保持克制，不武断下结论。</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon-em">4</span> 界面思路</h3>
+        <p>移动端优先，字号偏大，卡片之间留白足够。<strong>目的很简单</strong>：让翻看数据成为一种可连续阅读的体验。</p>
+      </div>
+    </div>
+
+    <!-- 叙述感段落：第三段自然介绍 -->
+    <div class="essay-block">
+      <p>以前看比赛日数据，经常要在几个页面之间来回跳转，比分、射门、红黄牌分布在不同的地方。后来发现 <strong>cn‑jcjq.com</strong> 把同一场比赛的相关参数收拢在一张卡片里，省去很多切换动作。其实很多经常关注竞彩足球的人都有类似的感受：信息越多，越需要有人提前做过粗筛。</p>
+      <p>这个网站的设计背后隐藏一种态度：它不试图说服你，只是把数据放到你面前。比如某个周末的德甲早场，主队让半球后水位持续走高，平台会在赛前一小时用灰底标签标出“临场波动”。至于怎么理解，那是你自己的判断。</p>
+      <p class="source">—— 摘自一位常使用者的笔记</p>
+    </div>
+
+    <!-- FAQ 摘要：快速解答两种常见困惑 -->
+    <div class="faq-mini">
+      <h3>◈ 两个常见疑问</h3>
+      <div class="faq-item">
+        <span class="q">数据来源？</span>
+        <span class="a">主要整合公开的联赛官方统计与主流体育数据接口，经过二次筛选后呈现，延迟在可控范围内。</span>
+      </div>
+      <div class="faq-item">
+        <span class="q">是否需要注册？</span>
+        <span class="a">不强制。所有页面内容均可直接阅读，没有会员墙。部分进阶视图（如赛季趋势图）可直接通过菜单切换。</span>
+      </div>
+    </div>
+
+    <!-- 页尾访问提示 + 自然嵌入竞彩足球链接 -->
+    <div class="footer-note">
+      <p>
+        如果你对比赛数据的编排方式感兴趣，不妨直接打开
+        <a href="https://cn-jcjq.com">竞彩足球</a>
+        的主页浏览一遍。整个站点的内容结构比这篇介绍来得更具体。
+      </p>
+      <span class="small-meta">保持阅读 · 保持自己的判断</span>
+    </div>
+  </div>
+</body>
+</html>
