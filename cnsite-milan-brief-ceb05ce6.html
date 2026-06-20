@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>米兰体育 · 资料索引与信息卡片</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f4f6f9;
+            color: #1f2a3f;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 深色头图 — 主视觉 */
+        .hero {
+            background: linear-gradient(135deg, #0b1a2e 0%, #1d3653 100%);
+            color: #eef3fa;
+            padding: 4rem 0 3.5rem;
+            border-bottom: 4px solid #c7a45e;
+        }
+
+        .hero .container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            font-weight: 350;
+            color: #cbd6e6;
+            max-width: 650px;
+            border-left: 3px solid #c7a45e;
+            padding-left: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .hero .tagline strong {
+            color: #f0e2c2;
+            font-weight: 500;
+        }
+
+        /* 信息卡片区 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem 1.8rem;
+            margin: 3rem 0 2.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem 1.6rem 1.8rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s ease, box-shadow 0.25s ease;
+            border: 1px solid #e9edf2;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 32px rgba(0, 20, 40, 0.08);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #152b42;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h3 span {
+            background: #dce6f0;
+            border-radius: 40px;
+            padding: 0.1rem 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #1d3a5a;
+            letter-spacing: 0.02em;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #2a3e5a;
+            margin-bottom: 0.6rem;
+        }
+
+        .card ul {
+            list-style: none;
+            margin: 0.6rem 0 0.2rem;
+        }
+
+        .card ul li {
+            font-size: 0.92rem;
+            padding: 0.25rem 0;
+            color: #2f4461;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .card ul li::before {
+            content: "▹";
+            color: #c7a45e;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .emph-link {
+            color: #b3873b;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px dashed #b3873b80;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .emph-link:hover {
+            color: #7f5f2b;
+            border-bottom: 1px solid #7f5f2b;
+        }
+
+        /* 自然链接段落 — 信息索引角度 */
+        .index-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2.2rem 2.4rem;
+            margin: 1.8rem 0 3rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+        }
+
+        .index-section h2 {
+            font-size: 1.6rem;
+            font-weight: 550;
+            color: #13273e;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .index-section p {
+            margin-bottom: 1rem;
+            font-size: 0.98rem;
+            color: #1f324b;
+        }
+
+        .index-section strong {
+            color: #0e2640;
+            font-weight: 600;
+        }
+
+        .faq-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem 2.5rem;
+            margin: 2rem 0 0.5rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e4e9f0;
+            padding-bottom: 0.8rem;
+        }
+
+        .faq-item .q {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1d3653;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-item .a {
+            font-size: 0.92rem;
+            color: #3c5272;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 2rem 0 2.5rem;
+            font-size: 0.85rem;
+            color: #5d6f89;
+            border-top: 1px solid #dbe1ea;
+            margin-top: 2rem;
+        }
+
+        .footer-note a {
+            color: #b3873b;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* 响应式 */
+        @media (max-width: 800px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero .tagline {
+                font-size: 1rem;
+            }
+            .faq-mini {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .index-section {
+                padding: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-grid {
+                gap: 1.2rem;
+            }
+            .card {
+                padding: 1.6rem 1.2rem;
+            }
+            .hero {
+                padding: 2.8rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 深色主视觉 -->
+    <section class="hero">
+        <div class="container">
+            <h1>米兰体育 · 信息卡片</h1>
+            <div class="tagline">
+                从赛事资料梳理到动态索引 —— <strong>结构化整理</strong>，为关注体育资讯的用户提供简洁入口。
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- 用途卡片 + 适合人群 混合网格 -->
+        <div class="card-grid">
+            <div class="card">
+                <h3>📋 赛事速查 <span>索引</span></h3>
+                <p>按联赛、杯赛、国家队比赛分层整理日程与结果，覆盖足球、篮球、网球等主流项目。历史赛事数据可回溯三个赛季。</p>
+                <ul>
+                    <li>五大联赛 + 欧冠、欧联</li>
+                    <li>NBA / 欧篮 / CBA 关键场次</li>
+                    <li>大满贯 &amp; ATP/WTA 巡回赛</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🧩 信息聚合 <span>用途</span></h3>
+                <p>汇集多来源的赛前分析、阵容变动、伤停简报，通过卡片式摘要降低信息过载，适合赛前快速浏览。</p>
+                <ul>
+                    <li>伤停与预计首发</li>
+                    <li>交锋记录趋势</li>
+                    <li>近期状态雷达图</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>👥 适合人群</h3>
+                <p>面向日常关注体育动态的爱好者、竞猜参考用户以及需要快速整理资料的分析者。内容偏重事实与数据，减少主观评论。</p>
+                <ul>
+                    <li>体育数据爱好者</li>
+                    <li>赛事前瞻研究者</li>
+                    <li>信息效率型用户</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>⚙️ 场景举例</h3>
+                <p>周末赛前快速过一遍当日焦点战的基础信息；或周中查看欧洲杯预选赛分组形势。页面保持轻量，不强制登录。</p>
+                <ul>
+                    <li>赛前 2 小时查看确认名单</li>
+                    <li>跨联赛对比球队数据</li>
+                    <li>检索历史交锋片段</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 自然链接段落 + FAQ 摘要 (从资料整理角度) -->
+        <div class="index-section">
+            <h2>资料整理 · 索引说明</h2>
+            <p>本站定位为体育信息聚合与结构化展示，从公开赛事数据、媒体简报及联赛官方渠道提取可验证信息，按时间线与赛事维度分类。对于深度分析或实时赔率变动，建议直接参考权威数据机构。若希望获取更完整的赛事列表与每日更新，可通过 <a href="https://cnsite--milan.com" class="emph-link">米兰体育</a> 浏览持续维护的索引页，其中包含分类筛选、历史归档以及近期重点赛事标记。</p>
+            <p>内容团队对每一条信息标注来源分类（官方 / 媒体 / 数据平台），并在卡片下方附上简要置信度标识。我们不生产预测结论，而是以整理和引用的方式降低信息获取成本。以下为常见问题摘要：</p>
+
+            <div class="faq-mini">
+                <div class="faq-item">
+                    <div class="q">数据更新频率如何？</div>
+                    <div class="a">比赛日数据在终场后 30 分钟内更新比分与基础统计；赛前首发通常在开球前 45–60 分钟整理。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="q">是否包含电竞或小众项目？</div>
+                    <div class="a">当前阶段以足球、篮球、网球为核心，拳击与综合格斗仅收录头部赛事。电竞赛事暂未纳入常规索引。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="q">信息出错如何反馈？</div>
+                    <div class="a">每张卡片底部设有纠错入口（文本链接），提交后通常在一个工作日内核查更正。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="q">是否需要注册？</div>
+                    <div class="a">不强制注册。部分高级筛选与历史数据导出功能需免费账号，无付费墙。</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-note container">
+        <span>基于公开资料整理 · 信息索引站 · 内容仅供参考</span><br>
+        <span style="opacity: 0.6;">© 米兰体育资料卡片 · 非官方渠道</span>
+    </footer>
+</body>
+</html>
