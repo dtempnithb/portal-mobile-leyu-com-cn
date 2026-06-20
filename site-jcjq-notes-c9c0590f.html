@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竞彩足球 · 赛事观察与思路</title>
+    <style>
+        /* === 全局重置与变量 === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f5f7fc;
+            color: #1e2a3a;
+            line-height: 1.6;
+        }
+        a {
+            color: #2463eb;
+            text-decoration: none;
+            transition: color 0.2s, border-bottom 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+        a:hover {
+            color: #1a4fc4;
+            border-bottom: 1px solid #2463eb;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === 顶部导航 === */
+        .navbar {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .nav-logo {
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            color: #facc15;
+            border-bottom: none;
+        }
+        .nav-logo:hover {
+            border-bottom: none;
+            color: #fde047;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            font-size: 0.95rem;
+        }
+        .nav-links a {
+            color: #cbd5e1;
+            border-bottom: none;
+            padding: 4px 0;
+        }
+        .nav-links a:hover {
+            color: #ffffff;
+            border-bottom: 2px solid #facc15;
+        }
+
+        /* === 深色头图 Hero === */
+        .hero {
+            background: linear-gradient(145deg, #0b1120 0%, #1a2332 100%);
+            color: #edf2f7;
+            padding: 80px 0 70px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+        .hero h1 span {
+            color: #facc15;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            max-width: 680px;
+            margin: 0 auto 12px;
+            color: #b0c4de;
+        }
+        .hero .sub-meta {
+            font-size: 0.95rem;
+            color: #8899b4;
+            margin-top: 28px;
+            border-top: 1px solid #2d3848;
+            padding-top: 26px;
+            display: inline-block;
+        }
+
+        /* === 核心介绍区 === */
+        .intro-section {
+            background: #ffffff;
+            padding: 56px 0 48px;
+        }
+        .intro-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        .intro-text {
+            flex: 2;
+            min-width: 280px;
+        }
+        .intro-text h2 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+        .intro-text p {
+            margin-bottom: 18px;
+            font-size: 1.02rem;
+            color: #2c3e50;
+        }
+        .intro-highlight {
+            background: #eef3fc;
+            border-left: 4px solid #2463eb;
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0 8px;
+        }
+        .intro-highlight p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .intro-side {
+            flex: 1.2;
+            min-width: 220px;
+            background: #f8faff;
+            border-radius: 16px;
+            padding: 28px 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #e2e9f2;
+        }
+        .intro-side h3 {
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+        .intro-side ul {
+            list-style: none;
+        }
+        .intro-side li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e5ebf3;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .intro-side li:last-child {
+            border-bottom: none;
+        }
+        .intro-side li::before {
+            content: "⚽";
+            color: #facc15;
+            font-size: 0.9rem;
+        }
+
+        /* === 三个场景模块 (卡片) === */
+        .scenes {
+            background: #f5f7fc;
+            padding: 56px 0 60px;
+        }
+        .scenes h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #0f172a;
+        }
+        .scene-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .scene-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px 26px 28px;
+            flex: 1 1 280px;
+            max-width: 340px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.25s;
+            border: 1px solid #e8edf4;
+        }
+        .scene-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.07);
+        }
+        .scene-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+        .scene-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+        .scene-card p {
+            color: #3d4a5c;
+            font-size: 0.98rem;
+        }
+
+        /* === 常见说明 (FAQ 摘要风格) === */
+        .faq-section {
+            background: #ffffff;
+            padding: 50px 0 56px;
+            border-top: 1px solid #e2e9f2;
+        }
+        .faq-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: #0f172a;
+        }
+        .faq-item {
+            padding: 18px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-q {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-q::before {
+            content: "▸";
+            color: #2463eb;
+            font-weight: 700;
+        }
+        .faq-a {
+            color: #3d4a5c;
+            padding-left: 28px;
+            font-size: 0.97rem;
+        }
+
+        /* === 页脚 === */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 34px 0 28px;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #facc15;
+            border-bottom: none;
+        }
+        footer a:hover {
+            color: #fde047;
+            border-bottom: 1px solid #facc15;
+        }
+
+        /* === 响应式 === */
+        @media (max-width: 680px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .navbar .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-links {
+                gap: 18px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .intro-grid {
+                flex-direction: column;
+                gap: 28px;
+            }
+            .scene-card {
+                max-width: 100%;
+                flex: 1 1 100%;
+            }
+            .faq-item {
+                padding: 14px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="https://site-jcjq.com" class="nav-logo">竞彩足球</a>
+            <div class="nav-links">
+                <a href="#intro">观察</a>
+                <a href="#scenes">场景</a>
+                <a href="#faq">说明</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 深色头图 -->
+    <section class="hero">
+        <div class="container">
+            <h1>围绕 <span>竞彩足球</span> 的<br>一种观看方式</h1>
+            <p>从赛前数据到临场思绪，从冷门捕捉到节奏把控——我们试着把那些模糊的判断，慢慢理成一条可以反复回顾的线索。</p>
+            <div class="sub-meta">内容方向 · 赛事逻辑 · 独立视角</div>
+        </div>
+    </section>
+
+    <!-- 核心介绍区 -->
+    <section class="intro-section" id="intro">
+        <div class="container intro-grid">
+            <div class="intro-text">
+                <h2>不止是预测，更多是理解</h2>
+                <p>每场比赛都是一段叙事：积分榜的压力、主客场的氛围、核心球员的状态曲线。而 <a href="https://site-jcjq.com">竞彩足球</a> 所关注的，从来不是某个单一数字，而是这些变量之间的相互拉扯。</p>
+                <p>我们试着记录联赛周期的内在节奏，把那些容易被忽略的细节——比如一周双赛后的体能折线、教练战术的微调、裁判尺度的波动——纳入自己的分析框架。哪怕最终只是多了一点点判断的依据，也值得反复推敲。</p>
+                <div class="intro-highlight">
+                    <p>⚽ 每周保持 3–4 个联赛的追踪，不贪多，但求每个观察点都有依据。理解和感受比赛，往往比单纯的结果更有延续性。</p>
+                </div>
+            </div>
+            <div class="intro-side">
+                <h3>我们关注的方向</h3>
+                <ul>
+                    <li>联赛周期与轮次特点</li>
+                    <li>球队近期攻防效率</li>
+                    <li>关键球员伤停影响</li>
+                    <li>历史交锋心理因素</li>
+                    <li>赛前赔率与市场情绪</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 三个场景模块 -->
+    <section class="scenes" id="scenes">
+        <div class="container">
+            <h2>三个常见场景</h2>
+            <div class="scene-cards">
+                <div class="scene-card">
+                    <div class="scene-icon">📊</div>
+                    <h3>数据与直觉之间</h3>
+                    <p>有些比赛数据指向明显，但临场走势却常常偏离。这时候我们更倾向于回溯近五轮的实际表现，而不是盲目相信纸面实力。</p>
+                </div>
+                <div class="scene-card">
+                    <div class="scene-icon">🔄</div>
+                    <h3>冷门背后的痕迹</h3>
+                    <p>冷门不是凭空出现的。往往在之前一两轮，就能看到球队运转失灵的影子——传球成功率下降、防线站位松散。我们试着提前识别这些微弱信号。</p>
+                </div>
+                <div class="scene-card">
+                    <div class="scene-icon">📅</div>
+                    <h3>赛程节奏的影响</h3>
+                    <p>密集赛程下，阵容轮换幅度、球员恢复能力、甚至旅行距离都可能改变比赛走向。我们会把这些因素放进当天的判断清单里。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见说明 FAQ 摘要 -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <h2>一些基础说明</h2>
+            <div class="faq-item">
+                <div class="faq-q">竞彩足球的关注范围是什么？</div>
+                <div class="faq-a">主要覆盖欧洲五大联赛、欧冠、欧联以及部分亚洲和南美重点赛事。我们更倾向于长期跟踪固定联赛，以积累对球队风格的熟悉度。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">信息更新的频率如何？</div>
+                <div class="faq-a">赛前一天和比赛日当天会集中更新思路，周中则会整理周期性的联赛观察笔记。没有比赛的日子，我们更倾向于回顾和总结。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">这些内容可以作为决策依据吗？</div>
+                <div class="faq-a">所有内容仅基于公开数据和比赛分析，不构成任何承诺或建议。足球比赛存在不可预知的偶然性，请根据自己的判断独立思考。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">如何开始了解这个领域？</div>
+                <div class="faq-a">可以从关注一支球队、一个联赛开始，慢慢建立自己的观察框架。我们也推荐多看看比赛录像和赛后数据，比任何文章都来得直观。更多内容可访问 <a href="https://site-jcjq.com">竞彩足球</a> 了解。</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2025  ·  独立赛事观察笔记  ·  <a href="https://site-jcjq.com">竞彩足球</a></p>
+            <p style="margin-top: 10px; font-size: 0.82rem; color: #6b7a93;">基于公开信息整理 · 保持冷静 · 享受比赛本身</p>
+        </div>
+    </footer>
+
+</body>
+</html>
