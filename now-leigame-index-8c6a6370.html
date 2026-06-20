@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雷竞技 · 稳定入口与页面说明</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fbe9d7 0%, #f5d6b3 50%, #edc29b 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7;
+      color: #2e241e;
+      padding: 2rem 1.2rem;
+    }
+
+    .page-wrapper {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* hero */
+    .hero {
+      background: linear-gradient(to right, #e8c9b0, #f2dcc9);
+      padding: 2.8rem 2rem 2rem;
+      border-radius: 40px 40px 20px 20px;
+      text-align: center;
+      box-shadow: 0 12px 24px rgba(120, 70, 40, 0.15);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: #3b2b1d;
+      background: rgba(255, 248, 235, 0.35);
+      display: inline-block;
+      padding: 0.2rem 2rem;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #503e2b;
+      max-width: 520px;
+      margin: 0.5rem auto 0;
+      background: rgba(255, 240, 220, 0.5);
+      padding: 0.4rem 1.4rem;
+      border-radius: 40px;
+      backdrop-filter: blur(1px);
+    }
+
+    /* 白色卡片 */
+    .card {
+      background: #fffcf7;
+      border-radius: 32px;
+      padding: 2rem 2.2rem;
+      margin-bottom: 2.2rem;
+      box-shadow: 0 8px 18px rgba(100, 60, 30, 0.08);
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 28px rgba(100, 60, 30, 0.12);
+    }
+
+    .card h2 {
+      font-size: 1.6rem;
+      font-weight: 450;
+      color: #4f3827;
+      border-left: 5px solid #dba87a;
+      padding-left: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .card p {
+      margin-bottom: 1rem;
+      font-size: 1.04rem;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .inline-link {
+      color: #965e39;
+      background: #f2e1d0;
+      padding: 0.15rem 0.7rem;
+      border-radius: 30px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .inline-link:hover {
+      background: #dba87a;
+      color: #2b1d13;
+    }
+
+    /* 特点卡片 (flex) */
+    .feature-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .feature-item {
+      flex: 1 1 170px;
+      background: #f8efe6;
+      border-radius: 24px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      box-shadow: inset 0 1px 3px rgba(255, 255, 240, 0.6), 0 3px 6px rgba(110, 70, 40, 0.05);
+    }
+
+    .feature-item span {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.2rem;
+      opacity: 0.75;
+    }
+
+    .feature-item h3 {
+      font-size: 1.1rem;
+      font-weight: 450;
+      color: #4f3827;
+    }
+
+    .feature-item p {
+      font-size: 0.9rem;
+      color: #5f4a38;
+      margin-top: 0.3rem;
+    }
+
+    /* 引用块 (FAQ 摘要风格) */
+    .faq-brief {
+      background: #f5e5d7;
+      border-radius: 28px;
+      padding: 1.5rem 2rem;
+      margin: 1.8rem 0 0.8rem;
+    }
+
+    .faq-brief h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #3b2b1d;
+      margin-bottom: 0.8rem;
+    }
+
+    .faq-brief ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .faq-brief li {
+      background: rgba(255, 245, 230, 0.6);
+      margin-bottom: 0.6rem;
+      padding: 0.5rem 1rem 0.5rem 2rem;
+      border-radius: 40px;
+      position: relative;
+      font-size: 0.95rem;
+    }
+
+    .faq-brief li::before {
+      content: "▹";
+      position: absolute;
+      left: 0.8rem;
+      color: #b37c58;
+      font-weight: bold;
+    }
+
+    /* 页尾 */
+    .page-footer {
+      text-align: center;
+      padding: 2rem 0.5rem 0.8rem;
+      border-top: 2px dashed rgba(130, 80, 50, 0.15);
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      color: #53402b;
+    }
+
+    .page-footer a {
+      color: #7a553a;
+      text-decoration: none;
+      border-bottom: 1px dotted #b78b68;
+    }
+
+    .page-footer a:hover {
+      border-bottom: 2px solid #b78b68;
+    }
+
+    /* 响应式 */
+    @media (max-width: 500px) {
+      body {
+        padding: 1rem 0.8rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+        padding: 0.1rem 1.2rem;
+      }
+
+      .card {
+        padding: 1.5rem 1.2rem;
+      }
+
+      .feature-grid {
+        gap: 1rem;
+      }
+
+      .faq-brief {
+        padding: 1.2rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- hero -->
+  <div class="hero">
+    <h1>雷竞技</h1>
+    <p>稳定入口 · 页面说明</p>
+  </div>
+
+  <!-- 第一段 · 背景与入口定位 -->
+  <div class="card">
+    <h2>从日常到专属入口</h2>
+    <p>
+      在信息流动快速的今天，保持一个稳定、干净的出发位置，比追逐链接本身更值得在意。<strong>雷竞技</strong> 所代表的，不止是一个名称，而是一段经过梳理的可信赖路径。许多人习惯把 <a href="https://now-leigame.com" class="inline-link">雷竞技</a> 设为书签栏里的固定项——不是因为它的外观，而是因为每次打开都能直接进入状态，不需要二次筛选或验证。
+    </p>
+    <p>
+      我们更愿意把它理解为一个“桌面的角落”：上线时安静在那里，你需要时随时推开。没有额外弹层，没有突然更换的地址。从第一次保存到长时间使用，界面和指向始终保持一致。
+    </p>
+  </div>
+
+  <!-- 第二段 · 特点与使用场景 (杂志式简卡) -->
+  <div class="card">
+    <h2>日常使用中的几个瞬间</h2>
+    <p>不管是午休随手翻看，还是晚上静下心来浏览，一些细节让这个入口变得更顺手：</p>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <span>📁</span>
+        <h3>固定入口</h3>
+        <p>不会随意跳转或失效，长期使用也安心</p>
+      </div>
+      <div class="feature-item">
+        <span>🧭</span>
+        <h3>清晰结构</h3>
+        <p>栏目分区明确，减少无意义的点击消耗</p>
+      </div>
+      <div class="feature-item">
+        <span>🌿</span>
+        <h3>低打扰</h3>
+        <p>没有强制弹窗或过度推送，聚焦内容本身</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 1.2rem;">
+      这些看起来并不花哨，但长期使用下来，很多人觉得“稳定”本身就是最好的体验。就像每天经过的街道，你知道哪一盏灯会亮，哪个转角有长椅可以休息。<a href="https://now-leigame.com" class="inline-link">雷竞技</a> 在这方面的坚持，让习惯它的用户几乎感觉不到“入口”的存在——因为它始终在那里。
+    </p>
+  </div>
+
+  <!-- 第三段 · 页面说明 + FAQ摘要 -->
+  <div class="card">
+    <h2>关于这个页面的说明</h2>
+    <p>
+      这里不打算介绍复杂的功能或教程，只是把最常被问到的几个问题（以及它们背后的设计思路）放在一起。如果你刚接触 <a href="https://now-leigame.com" class="inline-link">雷竞技</a>，下面几点可能会帮你更快熟悉：
+    </p>
+
+    <div class="faq-brief">
+      <h3>Q &amp; 简明摘要</h3>
+      <ul>
+        <li><strong>页面加载速度：</strong> 尽量精简资源，首屏内容优先，减少等待感</li>
+        <li><strong>链接可靠性：</strong> 主入口保持长期有效，不会突然变更域名或路径</li>
+        <li><strong>信息结构：</strong> 以卡片和分区为主，一眼能找到目标区域</li>
+        <li><strong>视觉一致性：</strong> 暖色基底+柔和对比，长时间浏览也不容易疲劳</li>
+      </ul>
+      <p style="margin-top: 1rem; font-size: 0.95rem;">
+        当然，细节远不止这些。但如果你愿意亲自打开感受一下，会比任何描述都更直接。页面上方和段落中已经嵌入了指向，方便你随时前往。
+      </p>
+    </div>
+
+    <p style="margin-top: 0.8rem; border-left: 3px solid #dba87a; padding-left: 1rem; font-style: italic; color: #4f3a28;">
+      “其实不需要记住太多东西，只要保存好这一个，其他自然就顺了。”——来自一位经常使用的朋友
+    </p>
+  </div>
+
+  <!-- 页尾访问提示 -->
+  <div class="page-footer">
+    <p>杂志专题 · 稳定入口与页面说明</p>
+    <p style="margin-top: 0.3rem;">
+      如果你还没有自己的书签，可以试试 <a href="https://now-leigame.com">雷竞技</a> 作为日常起点
+    </p>
+    <p style="font-size: 0.8rem; margin-top: 0.8rem; opacity: 0.6;">&mdash; 保持简洁，保持可用 &mdash;</p>
+  </div>
+
+</div>
+</body>
+</html>
